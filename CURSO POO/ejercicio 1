@@ -1,1 +1,73 @@
+package cursopoo;
 
+public class Ejercicio1 {
+    
+    public static void main(String[] args) {
+        
+        Alumno alu1 = new Alumno();
+        Alumno alu2 = new Alumno(2222222, "Esteban", "Avila");
+        
+        System.out.println("el id del alumno 2 es: " + alu2.getId());
+        System.out.println("el nombre del alumno 2 es: " + alu2.getNombre());
+        System.out.println("el apellido del alumno 2 es: " + alu2.getApellido());
+        
+        alu1.setId(1111111);
+        alu1.setNombre("pepito");
+        alu1.setApellido("Gomez");
+        
+        System.out.println("\n");
+        System.out.println("el id del alumno 1 es: " + alu1.getId());
+        System.out.println("el nombre del alumno 1 es: " + alu1.getNombre());
+        System.out.println("el apellido del alumno 1 es: " + alu1.getApellido());
+        
+        alu2.setId(1096495);
+        
+        System.out.println("\n");
+        System.out.println("el id del alumno 2 es: " + alu2.getId());
+        System.out.println("el nombre del alumno 2 es: " + alu2.getNombre());
+        System.out.println("el apellido del alumno 2 es: " + alu2.getApellido());
+    }
+}
+
+package cursopoo;
+
+public class Alumno {
+    
+    int id;
+    String nombre;
+    String apellido;
+    
+    public Alumno(){
+    }
+    
+    public Alumno(int id, String nombre, String apellido){
+        
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+}
