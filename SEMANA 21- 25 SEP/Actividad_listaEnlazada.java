@@ -50,5 +50,12 @@ public class ListasEnlazadas21sep {
         }
         
         System.out.println("\n la materia bases de datos esta en la posicion: " + materias.indexOf("bases de datos"));
+
+        System.out.println("\n buscando la posicion de matematicas " + materias.indexOf("matematicas"));
+        
+        materias.set(3, "matematicas aplicadas");
+        
+        materias.forEach(System.out::println); 
     }
 }
+    
