@@ -1,0 +1,211 @@
+public class Product {
+    private String id;
+    private String name;
+    private double price;
+
+    
+    public Product() {
+    }
+
+    public Product(String id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String toString() {
+        return "ID: " + id + " | Nombre: " + name + " | Precio: " + price;
+    }
+}
+
+
+
+public class Inventory {
+
+    
+    private class Node {
+        Product product;
+        Node next;
+
+        public Node(Product product) {
+            this.product = product;
+            this.next = null;
+        }
+    }
+
+    private Node head; 
+    private int size;  
+
+    public Inventory() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    public void addFirst(Product product) {
+        Node newNode = new Node(product);
+        newNode.next = head;
+        head = newNode;
+        size++;
+    }
+
+    public void addLast(Product product) {
+        Node newNode = new Node(product);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        size++;
+    }
+
+    public void displayAll() {
+        if (head == null) {
+            System.out.println(" La lista esta vacia. ");
+            return;
+        }
+        Node current = head;
+        while (current != null) {
+            System.out.println(current.product);
+            current = current.next;
+        }
+    }
+
+    public Product getFirst() {
+        if (head != null) {
+            return head.product;
+        }
+        return null;
+    }
+
+    public Product getLast() {
+        if (head == null) return null;
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        return current.product;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Product findById(String id) {
+        Node current = head;
+        while (current != null) {
+            if (current.product.getId().equalsIgnoreCase(id)) {
+                return current.product;
+            }
+            current = current.next;
+        }
+        return null; 
+    }
+
+    public boolean updatePrice(String id, double newPrice) {
+        Product product = findById(id);
+        if (product != null) {
+            product.setPrice(newPrice);
+            return true;
+        }
+        return false;
+    }
+
+    public void removeFirst() {
+        if (head != null) {
+            head = head.next;
+            size--;
+        }
+    }
+
+    public void removeLast() {
+        if (head == null) return;
+
+        if (head.next == null) {
+            head = null;
+        } else {
+            Node current = head;
+            while (current.next.next != null) {
+                current = current.next;
+            }
+            current.next = null;
+        }
+        size--;
+    }
+}
+
+
+public class InventoryApp {
+
+    public static void main(String[] args) {
+        
+        Inventory inventory = new Inventory();
+
+        System.out.println(" ================= Inventario ======================== ");
+
+        Product p1 = new Product("P1", " botella de agua ", 2000);
+        Product p2 = new Product("P2", " arroz ", 5500);
+        Product p3 = new Product("P3", " mandarina ", 600);
+        Product p4 = new Product("P4", " mantequilla ", 4700);
+        Product p5 = new Product("P5", " papel ", 6000);
+
+        inventory.addLast(p1);
+        inventory.addLast(p2);
+        inventory.addLast(p3);
+        inventory.addLast(p4);
+        inventory.addFirst(p5); 
+
+        System.out.println("--- INVENTARIO INICIAL (Total: " + inventory.getSize() + " elementos) ---");
+        inventory.displayAll();
+
+        System.out.println("\nPrimer elemento: " + inventory.getFirst());
+        System.out.println("Ultimo elemento: " + inventory.getLast());
+
+        System.out.println("\n--- BUSQUEDA DE PRODUCTO (ID: P2) ---");
+        Product searched = inventory.findById("P2");
+        if (searched != null) {
+            System.out.println(" Producto Encontrado: " + searched);
+        } else {
+            System.out.println(" Producto no encontrado.");
+        }
+
+        System.out.println("\n--- MODIFICAR PRECIO DE P2 ---");
+        boolean updated = inventory.updatePrice("P2", 7000);
+        if (updated) {
+            System.out.println("Precio modificado con exito:");
+            System.out.println(inventory.findById("P2"));
+        }
+
+        System.out.println("\n--- ELIMINANDO ELEMENTOS (Primer y Ultimo) ---");
+      
+        System.out.println("\n--- INVENTARIO FINAL (Total: " + inventory.getSize() + " elementos) ---");
+        inventory.displayAll();
+    }
+}
