@@ -1,1 +1,136 @@
+package inventario;
+
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ *
+ * @author Esteban Avila
+ */
+public class Inventory {
+
+    private List<Product> products;
+
+    public Inventory() {
+        products = new LinkedList<>();
+    }
+
+    // Busca un producto por ID. Devuelve null si no existe.
+    private Product findProduct(int ID) {
+        int productIndex = products.indexOf(new Product(ID));
+
+        if (productIndex == -1) {
+            return null;
+        }
+
+        return products.get(productIndex);
+    }
+
+    public void newProduct(int ID, String name, int existence, double price, String category) {
+
+        // Evita IDs repetidos
+        if (findProduct(ID) != null) {
+            System.out.println("\nYa existe un producto con ese ID");
+            return;
+        }
+
+        Product newProduct = new Product(ID, name, existence, price, category);
+
+        boolean success = products.add(newProduct);
+
+        if (success) {
+            System.out.println(
+                "El producto " + name +
+                " se añadió satisfactoriamente");
+        } else {
+            System.out.println(
+                "Ocurrió un problema al agregar el producto");
+        }
+    }
+
+    public void addProduct(int ID) {
+
+        Product product = findProduct(ID);
+
+        if (product == null) {
+            System.out.println("\nEl producto no existe");
+            return;
+        }
+
+        product.setExistence(product.getExistence() + 1);
+        System.out.println(
+            "\nSe agregó una unidad de "
+            + product.getName());
+    }
+
+    public void printProducts() {
+        System.out.println("PRODUCTOS EN EL ALMACÉN");
+
+        products.forEach(System.out::println);
+        System.out.println();
+    }
+
+    // ACTUALIZAR EL PRECIO
+    // ============================================
+    public void updateProduct(int ID, double price) {
+
+        Product product = findProduct(ID);
+
+        if (product == null) {
+            System.out.println("\nEl producto no existe");
+            return;
+        }
+
+        product.setPrice(price);
+        System.out.println(
+            "\nPrecio actualizado correctamente");
+    }
+
+    // MODIFICAR LA CATEGORÍA
+    // ============================================
+    public void updateCategory(int ID, String category) {
+
+        Product product = findProduct(ID);
+
+        if (product == null) {
+            System.out.println("\nEl producto no existe");
+            return;
+        }
+
+        product.setCategory(category);
+        System.out.println(
+            "\nCategoría actualizada correctamente");
+    }
+
+    // CONSULTAR UN PRODUCTO POR ID
+    // ============================================
+    public void searchProduct(int ID) {
+
+        Product product = findProduct(ID);
+
+        if (product == null) {
+            System.out.println("\nEl producto no existe");
+            return;
+        }
+
+        System.out.println("\nDATOS DEL PRODUCTO");
+        System.out.println(product);
+    }
+
+    public void deleteProduct(int ID) {
+
+        Product product = findProduct(ID);
+
+        if (product == null) {
+            System.out.println("\nEl producto no existe");
+            return;
+        }
+
+        products.remove(product);
+        System.out.println(
+            "El producto " + product +
+            " se eliminó");
+    }
+
+}
 
